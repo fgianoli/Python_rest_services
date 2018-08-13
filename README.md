@@ -12,12 +12,6 @@ otherwise jsut check to have already python 2.7x + psycopg2 module installed.
 
 To clone to Cloud9 workspace directly see https://docs.c9.io/docs/setting-up-github-workspace
 
-CREATE OR REPLACE FUNCTION f_wdpa_area(wdpaid bigint)
- RETURNS TABLE(wdpaid bigint, name text, gis_area numeric) AS 
- $$ 
- SELECT wdpaid,name,gis_area from public.wdpa WHERE wdpaid=$1 
-$$ LANGUAGE SQL;
-
 ------------------
 How To Setup and Run
 ------------------
@@ -33,73 +27,51 @@ How To Setup and Run
     sudo apt-get install libpq-dev python-dev
     sudo pip install psycopg2
     
-1 - Start Postgres Service
 
-    sudo service postgresql start
     
-2 - set postgre db (see https://community.c9.io/t/setting-up-postgresql/1573)
-
-    psql
-    ubuntu=# CREATE DATABASE "mydb";
-    ubuntu-# \password ubuntu
-    Enter new password: ubuntu123
+1 - Import Protected areas shp using QGIS
     
-3 - Create a table
-
-    ubuntu=#\c mydb
-    mydb=#CREATE TABLE mytable (id serial, name text);
+    ADD POSTGIS TABLE(S) --> NEW
+    Provide connection information --> OK
+    DATABASE --> DBMANAGER
+    IMPORT
     
-4 - Insert some data
+2 - Create a function
 
-    mydb=#INSERT INTO mytable (id,name) VALUES (0,'Duccio');
+    OPEN PGADMIN  
+    ```
+    CREATE OR REPLACE FUNCTION f_wdpa_area(wdpaid bigint)
+     RETURNS TABLE(wdpaid bigint, name text, gis_area numeric) AS 
+     $$ 
+     SELECT wdpaid,name,gis_area from public.wdpa WHERE wdpaid=$1 
+    $$ LANGUAGE SQL;
+    ```
     
-5 - Set DB connection in rest.py
+3 - Set DB connection in rest.py
 
-    07#  DBNAME = 'mydb'
+    07#  DBNAME = 'postgres'
     08#  HOST = 'localhost'
-    09#  USER = 'ubuntu'
-    10#  PASSWORD = 'ubuntu123'
+    09#  USER = 'user'
+    10#  PASSWORD = 'user'
     
-5 - Start the CGI Script for Local Rest Service Server (set PORT in server.py)
+5 - Go to the downloaded folder and start the CGI Script for Local Rest Service Server (set PORT in server.py)
 
     python server.py
     
-6 - Test the JSON response from an other Terminal:
-
-    eg call the table we created before:
+6 - Test the JSON response:
     
-    curl 'http://localhost:8888/rest.py?type=tab&schema=public&obj=mytable'
-    
-    will print
-    
-    [
-      {
-        "id": 0, 
-        "name": "Duccio"
-      }
-    ]
-    
-    eg call a function that list all people that see green:
-    
-        First we add the column and we add some more data to the DB
+    eg call a function that list the protected area with id = 916
+   
         
-        psql
-        ubuntu=#\c mydb
-        mydb=#ALTER TABLE mytable ADD COLUMN vision text;
-        mydb=#UPDATE mytable set vision='green' WHERE name='Duccio';
-        mydb=#INSERT INTO mytable (id,name,vision) VALUES (1,'Sorrenti','ocra');
-        mydb=# CREATE OR REPLACE FUNCTION f_people_colorvision(color text) RETURNS TABLE(id int, name text) AS $$ SELECT id,name from mytable WHERE vision=$1 $$ LANGUAGE SQL; 
-
-        then we test the Rest Call from terminal
-        
-        curl "http://localhost:8888/rest.py?type=fun&schema=public&obj=f_people_colorvision&params=(color:'green')"
+        curl "http://localhost:8888/rest.py?type=fun&schema=public&obj=f_wdpa&params=(wdpaid:916)"
     
         that will print
         
         [
           {
-            "id": "0", 
-            "name": "Duccio"
+            "wdpaid": "0", 
+            "name": "Serengeti National Park"
+            "gis_area": "13123.05"
           }
         ]
     
