@@ -39,13 +39,13 @@ How To Setup and Run
 2 - Create a function
 
     OPEN PGADMIN  
-    ```
-    CREATE OR REPLACE FUNCTION f_wdpa_area(wdpaid bigint)
-     RETURNS TABLE(wdpaid bigint, name text, gis_area numeric) AS 
-     $$ 
-     SELECT wdpaid,name,gis_area from public.wdpa WHERE wdpaid=$1 
-    $$ LANGUAGE SQL;
-    ```
+```
+CREATE OR REPLACE FUNCTION f_wdpa_area(wdpaid bigint)
+ RETURNS TABLE(wdpaid bigint, name text, gis_area numeric) AS 
+ $$ 
+ SELECT wdpaid,name,gis_area from public.wdpa WHERE wdpaid=$1 
+$$ LANGUAGE SQL;
+```
     
 3 - Set DB connection in rest.py
 
