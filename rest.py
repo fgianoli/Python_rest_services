@@ -4,10 +4,10 @@ import cgi
 import psycopg2
 import json
 
-DBNAME = 'mydb'
+DBNAME = 'postgres'
 HOST = 'localhost'
-USER = 'ubuntu'
-PASSWORD = 'ubuntu123'
+USER = 'user'
+PASSWORD = 'user'
 
 
 #---------- DB Tab&Fun QUERYs ----------#
