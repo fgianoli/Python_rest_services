@@ -12,6 +12,12 @@ otherwise jsut check to have already python 2.7x + psycopg2 module installed.
 
 To clone to Cloud9 workspace directly see https://docs.c9.io/docs/setting-up-github-workspace
 
+CREATE OR REPLACE FUNCTION f_wdpa_area(wdpaid bigint)
+ RETURNS TABLE(wdpaid bigint, name text, gis_area numeric) AS 
+ $$ 
+ SELECT wdpaid,name,gis_area from public.wdpa WHERE wdpaid=$1 
+$$ LANGUAGE SQL;
+
 ------------------
 How To Setup and Run
 ------------------
