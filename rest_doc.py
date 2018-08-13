@@ -20,8 +20,8 @@ print """Content-type: text/html
 </dl>
 <hr></hr>
 
-<pre>Call example: <h1><a href='http://localhost:8888/rest.py?type=tab&schema=public&obj=ne_10m_admin_0_countries&params=' target='_blank'>Link</a></h1></pre>
-eg: "http://localhost:8888/rest.py?type=tab&schema=public&obj=ne_10m_admin_0_countries&params="
+<pre>Call example: <h1><a href='http://localhost:8888/rest.py?type=fun&schema=public&obj=f_wdpa_area&params=(wdpaid:921)' target='_blank'>Link</a></h1></pre>
+eg: "http://localhost:8888/rest.py?type=fun&schema=public&obj=f_wdpa_area&params=(wdpaid:921)"
 
 <p>where </p> 
 <p><b>type=</b> can be 'tab' (for tables and views calls) or 'fun' (to call functions)</p> 
