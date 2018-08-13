@@ -34,13 +34,34 @@ How To Setup and Run
 2 - Create a function
 
     OPEN PGADMIN  
-```
-CREATE OR REPLACE FUNCTION f_wdpa_area(wdpaid bigint)
- RETURNS TABLE(wdpaid bigint, name text, gis_area numeric) AS 
- $$ 
- SELECT wdpaid,name,gis_area from public.wdpa WHERE wdpaid=$1 
-$$ LANGUAGE SQL;
-```
+    ```
+    CREATE OR REPLACE FUNCTION f_wdpa_lcc (wdpaid bigint)
+     RETURNS TABLE(
+     wdpaid bigint, 
+     name text,
+     gis_area numeric,
+     percent_1995_nat numeric, 
+     percent_2015_nat numeric, 
+     percent_1995_man numeric, 
+     percent_2015_man numeric, 
+     percent_1995_cul numeric, 
+     percent_2015_cul numeric, 
+     percent_1995_wat numeric, 
+     percent_2015_wat numeric, 
+     ) AS 
+     $$ 
+     SELECT wdpaid,name,gis_area,
+     percent_1995_nat,
+     percent_2015_nat,
+     percent_1995_man,
+     percent_2015_man,
+     percent_1995_cul,
+     percent_2015_cul,
+     percent_1995_wat,
+     percent_2015_wat
+     from public.wdpa WHERE wdpaid=$1 
+    $$ LANGUAGE SQL;
+    ```
     
 3 - Set DB connection in rest.py
 
@@ -56,9 +77,8 @@ $$ LANGUAGE SQL;
 6 - Test the JSON response:
     
     eg call a function that list the protected area with id = 916
-   
         
-        curl "http://localhost:8888/rest.py?type=fun&schema=public&obj=f_wdpa&params=(wdpaid:916)"
+        curl "http://localhost:8888/rest.py?type=fun&schema=public&obj=f_wdpa_lcc&params=(wdpaid:916)"
     
         that will print
         
@@ -67,6 +87,14 @@ $$ LANGUAGE SQL;
             "wdpaid": "0", 
             "name": "Serengeti National Park"
             "gis_area": "13123.05"
+            "percent_1995_nat": "13123.05"
+            "percent_2015_nat": "13123.05"
+            "percent_1995_man": "13123.05"
+            "percent_2015_man": "13123.05"
+            "percent_1995_cul": "13123.05"
+            "percent_2015_cul": "13123.05"
+            "percent_1995_wat": "13123.05"
+            "percent_2015_wat": "13123.05"
           }
         ]
     
