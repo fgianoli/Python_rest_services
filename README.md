@@ -35,37 +35,32 @@ How To Setup and Run
 
     OPEN PGADMIN  
     ```
-    CREATE OR REPLACE FUNCTION f_wdpa_lcc (wdpaid bigint)
-     RETURNS TABLE(
-     wdpaid bigint, 
-     name text,
-     gis_area numeric,
-     percent_1995_nat numeric, 
-     percent_2015_nat numeric, 
-     percent_1995_man numeric, 
-     percent_2015_man numeric, 
-     percent_1995_cul numeric, 
-     percent_2015_cul numeric, 
-     percent_1995_wat numeric, 
-     percent_2015_wat numeric, 
-     ) AS 
-     $$ 
-     SELECT wdpaid,name,gis_area,
-     percent_1995_nat,
-     percent_2015_nat,
-     percent_1995_man,
-     percent_2015_man,
-     percent_1995_cul,
-     percent_2015_cul,
-     percent_1995_wat,
-     percent_2015_wat
-     from public.wdpa WHERE wdpaid=$1 
-    $$ LANGUAGE SQL;
+    -- DROP FUNCTION public.get_pa_lc_1995_2015(integer);
+
+    CREATE OR REPLACE FUNCTION public.get_pa_lc_1995_2015(IN wdpaid integer)
+      RETURNS TABLE(wdpaid integer, "1995_nat" double precision, "2015_nat" double precision, "1995_man" double precision, "2015_man" double precision, "1995_cul" double precision, "2015_cul" double precision, "1995_wat" double precision, "2015_wat" double precision) AS
+    $BODY$ 
+     SELECT wdpaid,
+     "1995_nat",
+     "2015_nat",
+     "1995_man",
+     "2015_man",
+     "1995_cul",
+     "2015_cul",
+     "1995_wat",
+     "2015_wat"
+     from public.pa_lc_1995_2015 WHERE wdpaid=$1 
+    $BODY$
+      LANGUAGE sql VOLATILE
+      COST 100
+      ROWS 1000;
+    ALTER FUNCTION public.get_pa_lc_1995_2015(integer)
+      OWNER TO "user";
     ```
     
 3 - Set DB connection in rest.py
 
-    07#  DBNAME = 'postgres'
+    07#  DBNAME = 'foss4g'
     08#  HOST = 'localhost'
     09#  USER = 'user'
     10#  PASSWORD = 'user'
@@ -78,25 +73,20 @@ How To Setup and Run
     
     eg call a function that list the protected area with id = 916
         
-        curl "http://localhost:8888/rest.py?type=fun&schema=public&obj=f_wdpa_lcc&params=(wdpaid:916)"
+        curl "http://localhost:8888/rest.py?type=fun&schema=public&obj=get_pa_lc_1995_2015&params=(wdpaid:917)"
     
         that will print
         
-        [
-          {
-            "wdpaid": "0", 
-            "name": "Serengeti National Park"
-            "gis_area": "13123.05"
-            "percent_1995_nat": "13123.05"
-            "percent_2015_nat": "13123.05"
-            "percent_1995_man": "13123.05"
-            "percent_2015_man": "13123.05"
-            "percent_1995_cul": "13123.05"
-            "percent_2015_cul": "13123.05"
-            "percent_1995_wat": "13123.05"
-            "percent_2015_wat": "13123.05"
-          }
-        ]
+        wdpaid	"917"
+        name	"Ruaha National Park"
+        1995_wat	"0.00"
+        2015_man	"171.82"
+        1995_nat	"13626.90"
+        1995_man	"619.73"
+        1995_cul	"261.55"
+        2015_nat	"14075.46"
+        2015_cul	"260.89"
+        2015_wat	"0.00"
     
 url - parameters:
     
