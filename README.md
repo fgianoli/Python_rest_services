@@ -15,14 +15,6 @@ How To Setup and Run
     sudo chmod a+x rest.py
     sudo chmod a+x server.py
     sudo chmod a+x rest_doc.py
-
-0 - install psycopg2
-
-    sudo apt-get update
-    sudo apt-get install libpq-dev python-dev
-    sudo pip install psycopg2
-    
-
     
 1 - Import Protected areas shp using QGIS
     
