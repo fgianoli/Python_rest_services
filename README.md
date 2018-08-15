@@ -30,9 +30,24 @@ How To Setup and Run
     -- DROP FUNCTION public.get_pa_lc_1995_2015(integer);
 
     CREATE OR REPLACE FUNCTION public.get_pa_lc_1995_2015(IN wdpaid integer)
-      RETURNS TABLE(wdpaid integer, "1995_nat" double precision, "2015_nat" double precision, "1995_man" double precision, "2015_man" double precision, "1995_cul" double precision, "2015_cul" double precision, "1995_wat" double precision, "2015_wat" double precision) AS
+      RETURNS TABLE(
+      wdpaid integer, 
+      name text, 
+      _1995_nat double precision, 
+      _2015_nat double precision, 
+      _1995_man double precision, 
+      _2015_man double precision, 
+      _1995_cul double precision, 
+      _2015_cul double precision, 
+      _1995_wat double precision, 
+      _2015_wat double precision
+      ) 
+      AS
+      
     $BODY$ 
-     SELECT wdpaid,
+     SELECT 
+     wdpaid,
+     name,
      "1995_nat",
      "2015_nat",
      "1995_man",
@@ -71,14 +86,14 @@ How To Setup and Run
         
         wdpaid	"917"
         name	"Ruaha National Park"
-        1995_wat	"0.00"
-        2015_man	"171.82"
-        1995_nat	"13626.90"
-        1995_man	"619.73"
-        1995_cul	"261.55"
-        2015_nat	"14075.46"
-        2015_cul	"260.89"
-        2015_wat	"0.00"
+        _1995_wat	"0.00"
+        _2015_man	"171.82"
+        _1995_nat	"13626.90"
+        _1995_man	"619.73"
+        _1995_cul	"261.55"
+        _2015_nat	"14075.46"
+        _2015_cul	"260.89"
+        _2015_wat	"0.00"
     
 url - parameters:
     
