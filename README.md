@@ -25,8 +25,8 @@ How To Setup and Run
     
 2 - Create a function
 
-    OPEN PGADMIN  
-    ```
+   OPEN PGADMIN  
+    
     -- DROP FUNCTION public.get_pa_lc_1995_2015(integer);
 
     CREATE OR REPLACE FUNCTION public.get_pa_lc_1995_2015(IN wdpaid integer)
@@ -48,7 +48,7 @@ How To Setup and Run
       ROWS 1000;
     ALTER FUNCTION public.get_pa_lc_1995_2015(integer)
       OWNER TO "user";
-    ```
+
     
 3 - Set DB connection in rest.py
 
@@ -57,7 +57,7 @@ How To Setup and Run
     09#  USER = 'user'
     10#  PASSWORD = 'user'
     
-5 - Go to the downloaded folder and start the CGI Script for Local Rest Service Server (set PORT in server.py)
+5 - Go to the folder and start the CGI Script for Local Rest Service Server (set PORT in server.py)
 
     python server.py
     
