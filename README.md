@@ -4,8 +4,7 @@ LOCAL CGI Script for Rest Services: Postgres to JSON
     PostgreSQL 9.3.18
     Python 2.7.6
 
-Please check that .py files are executable ( step 00 )
-jsut check if you have already python 2.7x + psycopg2 module installed.
+Please check that *.py files are executable and check if you already have python 2.7x + psycopg2 module installed.
 
 ------------------
 How To Setup and Run
