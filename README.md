@@ -10,22 +10,29 @@ jsut check if you have already python 2.7x + psycopg2 module installed.
 ------------------
 How To Setup and Run
 ------------------
-00 - set file permnissions
+
+Set file permnissions
 
     sudo chmod a+x rest.py
     sudo chmod a+x server.py
     sudo chmod a+x rest_doc.py
     
-1 - Import Protected areas shp using QGIS
     
-    ADD POSTGIS TABLE(S) --> NEW
-    Provide connection information --> OK
-    DATABASE --> DBMANAGER
-    IMPORT
-    
-2 - Create a function
+Set DB connection in rest.py
 
-   OPEN PGADMIN  
+    07#  DBNAME = 'foss4g'
+    08#  HOST = 'localhost'
+    09#  USER = 'user'
+    10#  PASSWORD = 'user'
+
+
+Go to the folder and start the CGI Script for Local Rest Service Server (set PORT in server.py)
+
+    python server.py
+
+
+Create a function in the postgres DB using PGAdmin
+
     
     -- DROP FUNCTION public.get_pa_lc_1995_2015(integer);
 
@@ -64,19 +71,8 @@ How To Setup and Run
     ALTER FUNCTION public.get_pa_lc_1995_2015(integer)
       OWNER TO "user";
 
-    
-3 - Set DB connection in rest.py
 
-    07#  DBNAME = 'foss4g'
-    08#  HOST = 'localhost'
-    09#  USER = 'user'
-    10#  PASSWORD = 'user'
-    
-5 - Go to the folder and start the CGI Script for Local Rest Service Server (set PORT in server.py)
-
-    python server.py
-    
-6 - Test the JSON response:
+Test the JSON response:
     
     eg call a function that list the protected area with id = 916
         
@@ -95,6 +91,12 @@ How To Setup and Run
         _2015_cul	"260.89"
         _2015_wat	"0.00"
     
+
+
+
+
+
+
 url - parameters:
     
     - type = tab (or) fun  //tab to call tables or views, fun to call functions
