@@ -25,7 +25,7 @@ Set DB connection in rest.py
     10#  PASSWORD = 'user'
 
 
-Go to the folder and start the CGI Script for Local Rest Service Server (set PORT in server.py)
+Go to the folder (/media/user/usbdata/foss4g/scripts/rest) and start the CGI Script for Local Rest Service Server (set PORT in server.py)
 
     python server.py
 
