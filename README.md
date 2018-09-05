@@ -10,7 +10,7 @@ Please check that *.py files are executable and check if you already have python
 How To Setup and Run
 ------------------
 
-Set file permnissions
+Set file permissions
 
     sudo chmod a+x rest.py
     sudo chmod a+x server.py
